@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+    />
+    <style>
+      main {
+        width: 50vw;
+        margin: 0 auto;
+      }
+      [aria-invalid="true"] {
+        border: 1px solid #e00;
+      }
+      .errorMessage {
+        color: #e00;
+      }
+      .form-control::-webkit-input-placeholder {
+        color: #767676;
+      }
+      .form-control::-moz-placeholder {
+        color: #767676;
+      }
+      .form-control:-ms-input-placeholder {
+        color: #767676;
+      }
+    </style>
+  </head>
+  <body translate="no">
+    <main role="main">
+      <h1>Contact Us</h1>
+      <form
+        role="form"
+        aria-label="Contact Form"
+        id="contact-form"
+        name="contactForm"
+        method="post"
+        action=""
+      >
+        <div class="form-group">
+          <label for="first-name">First Name *</label>
+          <input
+            aria-required="true"
+            id="first-name"
+            name="firstName"
+            class="form-control"
+          />          
+        </div>
+        <div class="form-group">
+          <label for="last-name">Last Name *</label>
+          <input
+            aria-required="true"
+            id="last-name"
+            name="lastName"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <div id="email-label">Email Address *</label>
+          <input
+            aria-required="true"
+            aria-labelledby="email-label"
+            aria-describedby="email-info"
+            id="email"
+            name="email"
+            class="form-control"
+            placeholder="name@company.com"
+          />
+          <div id="email-info" style="display: none;" aria-hidden="true">Please provide you work email.</div>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone # *</label>
+          <input
+            aria-required="true"
+            id="phone"
+            name="phone"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <label for="street">Street Address *</label>
+          <input
+            aria-required="true"
+            id="street"
+            name="street"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <label for="apt">Apt, Suite or Floor (Optional)</label>
+          <input id="apt" name="apt" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="city">City *</label>
+          <input
+            aria-required="true"
+            id="city"
+            name="lastName"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <label for="state">State *</label>
+          <select
+            aria-required="true"
+            name="state"
+            id="state"
+            class="form-control"
+          >
+            <option></option>
+            <option value="AL">Alabama</option>
+            <option value="AK">Alaska</option>
+            <option value="AZ">Arizona</option>
+            <option value="AR">Arkansas</option>
+            <option value="CA">California</option>
+            <option value="CO">Colorado</option>
+            <option value="CT">Connecticut</option>
+            <option value="DE">Delaware</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="zip">Zip Code *</label>
+          <input
+            aria-required="true"
+            id="zip"
+            name="zip"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <label for="website">Website *</label>
+          <input
+            aria-required="true"
+            id="website"
+            name="website"
+            class="form-control"
+            placeholder="http://www.yourdomain.com"
+          />
+        </div>
+        <fieldset aria-required="true">
+          <legend style="margin-bottom: 0px;">
+            How Should We Get Back To You? *
+          </legend>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="emailMe" />
+              Email</label
+            >
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="callMe" />
+              Phone</label
+            >
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="mailMe" />
+              Mail</label
+            >
+          </div>
+        </fieldset>
+        <div class="form-group">
+          <label for="message">Message *</label>
+          <textarea
+            aria-required="true"
+            id="message"
+            name="message"
+            class="form-control"
+            placeholder="Question , Comment, etc."
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="form-control">
+            Submit Contact Form
+          </button>
+        </div>
+      </form>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script id="rendered-js">
+      $("#contact-form").submit(function (e) {
+        $("em").remove(".errorMessage");
+        var uniqueID = 1;
+        $("input", this)
+          .not("#apt")
+          .each(function () {
+            $(this).removeAttr("style");
+            if (!this.value) {
+              e.preventDefault();
+              var label = $("label[for='" + $(this).attr("id") + "']").text();
+              $(this).after(
+                '<em id="errorMsg' +
+                  uniqueID +
+                  '" class="errorMessage">' +
+                  label +
+                  " is empty. Please type a value.</em>"
+              );
+              $(this).attr("aria-invalid", "true");
+              $(this).attr("aria-describedby", "errorMsg" + uniqueID + "");
+              uniqueID++;
+            } else {
+              $(this).removeAttr("aria-invalid");
+              $(this).removeAttr("aria-describedby");
+            }
+          });
+        var checkboxChecked = $("input:checked").length > 0;
+        $("input[type=checkbox]", this).each(function () {
+          $(this).removeAttr("style");
+          if (!checkboxChecked) {
+            if (!this.checked) {
+              e.preventDefault();
+              var label = $(this).parent().text();
+              $(this).after(
+                '<em class="errorMessage">' +
+                  label +
+                  " not selected. Please choose at least one contact method.</em>"
+              );
+              $(this).attr("aria-invalid", "true");
+            } else {
+              $(this).removeAttr("aria-invalid");
+            }
+          }
+        });
+        $("select", this).each(function () {
+          $(this).removeAttr("style");
+          if (this.value === "") {
+            e.preventDefault();
+            $(this).after(
+              '<em id="errorMsg' +
+                uniqueID +
+                '"class="errorMessage">State * option not chosen. Please select from the drop down.</em>'
+            );
+            $(this).attr("aria-invalid", "true");
+            $(this).attr("aria-describedby", "errorMsg" + uniqueID + "");
+            uniqueID++;
+          } else {
+            $(this).removeAttr("aria-invalid");
+            $(this).removeAttr("aria-describedby");
+          }
+        });
+        $("textarea", this).each(function () {
+          $(this).removeAttr("style");
+          if (!this.value) {
+            e.preventDefault();
+            $(this).after(
+              '<em id="errorMsg' +
+                uniqueID +
+                '"class="errorMessage">Message * is empty. Please type a message.</em>'
+            );
+            $(this).attr("aria-invalid", "true");
+            $(this).attr("aria-describedby", "errorMsg" + uniqueID + "");
+            uniqueID++;
+          } else {
+            $(this).removeAttr("aria-invalid");
+            $(this).removeAttr("aria-describedby");
+          }
+        });
+        document.title = "Errors Present In Form - " + oldTitle;
+        $("[aria-invalid=true]").first().focus();
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Activity 4 - Fancy Select Dropbox</title>
+    <style>
+      body {
+        text-align: center;
+        background: #ebf4fb;
+        min-height: 95vh;
+        margin: 0;
+        padding: 0;
+        border-bottom: 5vh solid #3694d7;
+        font-family: "Myriad Pro", "Arial", sans;
+        font-size: 24px;
+      }
+
+      #selectElem {
+        margin-top: 20vh;
+      }
+
+      .select-box {
+        margin-bottom: 2em;
+        position: relative;
+        width: 270px;
+        margin: 0 auto;
+      }
+      .select-box button {
+        position: relative;
+        display: block;
+        overflow: hidden;
+        top: 0.5em;
+        cursor: pointer;
+        text-align: left;
+        white-space: nowrap;
+        color: #444;
+        font-size: 1em;
+        padding: 0.5em 2em 0.5em 0.5em;
+        width: 100%;
+        outline: none;
+        border: 0.06em solid transparent;
+        border-radius: 1em;
+        background-color: #cde4f5;
+      }
+      .select-box button[aria-expanded="true"] {
+        background-color: #fff;
+        border: 0.06em solid #3694d7;
+        border-radius: 1em 1em 0 0;
+      }
+      .select-box button[aria-expanded="true"]::after {
+        transform: rotate(-180deg);
+        top: calc((100% / 2) - 0.4em);
+      }
+      .select-box button::after {
+        content: "";
+        position: absolute;
+        right: 0.8em;
+        top: calc(100% / 2);
+        border: 0.3em solid #3694d7;
+        border-color: #3694d7 transparent transparent transparent;
+        transition: 0.4s all ease-in-out;
+      }
+      .select-box button:focus {
+        border: 1px solid #3694d7;
+      }
+      .select-box .options {
+        position: absolute;
+        border: 0.06em solid #3694d7;
+        border-top: none;
+        background: #fff;
+        border-radius: 0 0 0.25em 0.25em;
+        padding: 0;
+        margin: 0;
+        box-shadow: rgba(0, 0, 0, 0.1) 3px 3px 5px 0px;
+        max-height: 15em;
+        list-style: none;
+        width: calc(100% - 0.12em);
+        outline: none;
+        top: 60px;
+      }
+      .select-box .options li {
+        border-top: 0.06em solid #d9d9d9;
+        display: block;
+        height: 2em;
+        line-height: 2em;
+        padding-left: 1em;
+        padding-right: 1em;
+        font-size: 1em;
+        cursor: pointer;
+        position: relative;
+        transition: 0.3s color ease-in-out;
+        text-align: left;
+      }
+      .select-box .options li:hover,
+      .select-box .options li.focused {
+        background-color: #e1eff9;
+      }
+      .select-box .options li:first-child {
+        border-top: none;
+      }
+      .select-box .options li:last-child {
+        border-radius: 0 0 0.25em 0.25em;
+      }
+
+      hr {
+        margin: 60px 0;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      select {
+        padding: 0.3em;
+      }
+    </style>
+  </head>
+  <body translate="no">
+    <div id="selectElem">Select your neighbourhood:</div>
+    <div class="select-box">
+      <button
+        aria-labelledby="selectElem exp_button"
+        aria-haspopup="listbox"
+        aria-expanded="false"
+        id="exp_button"
+      >
+        All Neighborhoods
+      </button>
+      <ul
+        class="options hidden"
+        tabindex="-1"
+        role="listbox"
+        aria-labelledby="selectElm"
+      >
+        <li id="elem_All" role="option" aria-selected="true" class="focused">
+          All Neighborhoods
+        </li>
+        <li id="elem_Manhattan" role="option" aria-selected="false">
+          Manhattan
+        </li>
+        <li id="elem_Brooklyn" role="option" aria-selected="false">Brooklyn</li>
+        <li id="elem_Queens" role="option" aria-selected="false">Queens</li>
+      </ul>
+    </div>
+    <script src="https://www.w3.org/TR/wai-aria-practices-1.1/examples/js/utils.js"></script>
+    <script src="https://www.w3.org/TR/wai-aria-practices-1.1/examples/listbox/js/listbox.js"></script>
+    <script id="rendered-js">
+      /**
+       * ARIA Collapsible Dropdown Listbox Example
+       * @function onload
+       * @desc Initialize the listbox example once the page has loaded
+       */
+
+      window.addEventListener("load", function () {
+        var button = document.querySelector("button");
+        var exListbox = new aria.Listbox(document.querySelector(".options"));
+        var listboxButton = new aria.ListboxButton(button, exListbox);
+      });
+
+      var aria = aria || {};
+
+      aria.ListboxButton = function (button, listbox) {
+        this.button = button;
+        this.listbox = listbox;
+        this.registerEvents();
+      };
+
+      aria.ListboxButton.prototype.registerEvents = function () {
+        this.button.addEventListener("click", this.showListbox.bind(this));
+        this.button.addEventListener("keyup", this.checkShow.bind(this));
+        this.listbox.listboxNode.addEventListener(
+          "blur",
+          this.hideListbox.bind(this)
+        );
+        this.listbox.listboxNode.addEventListener(
+          "keydown",
+          this.checkHide.bind(this)
+        );
+        this.listbox.setHandleFocusChange(this.onFocusChange.bind(this));
+      };
+
+      aria.ListboxButton.prototype.checkShow = function (evt) {
+        var key = evt.which || evt.keyCode;
+
+        switch (key) {
+          case aria.KeyCode.UP:
+          case aria.KeyCode.DOWN:
+            evt.preventDefault();
+            this.showListbox();
+            this.listbox.checkKeyPress(evt);
+            break;
+        }
+      };
+
+      aria.ListboxButton.prototype.checkHide = function (evt) {
+        var key = evt.which || evt.keyCode;
+
+        switch (key) {
+          case aria.KeyCode.RETURN:
+          case aria.KeyCode.ESC:
+            evt.preventDefault();
+            this.hideListbox();
+            this.button.focus();
+            break;
+        }
+      };
+
+      aria.ListboxButton.prototype.showListbox = function () {
+        aria.Utils.removeClass(this.listbox.listboxNode, "hidden");
+        this.button.setAttribute("aria-expanded", "true");
+        this.listbox.listboxNode.focus();
+      };
+
+      aria.ListboxButton.prototype.hideListbox = function () {
+        aria.Utils.addClass(this.listbox.listboxNode, "hidden");
+        this.button.setAttribute("aria-expanded", "false");
+      };
+
+      aria.ListboxButton.prototype.onFocusChange = function (focusedItem) {
+        this.button.innerText = focusedItem.innerText;
+        focusedItem.classList.add("focused");
+        focusedItem.setAttribute("aria-selected", "true");
+      };
+    </script>
+  </body>
+</html>

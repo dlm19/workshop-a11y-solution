@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Activity 2 - Styling</title>
+    <style>
+      .wrapper {
+        width: 900px;
+        margin: 0 auto;
+      }
+      header {
+        background: burlywood;
+        padding: 1em;
+      }
+      nav ul {
+        display: flex;
+      }
+      nav li {
+        font-size: 1em;
+        margin-right: 0.5em;
+      }
+      footer {
+        background: yellowgreen;
+        padding: 1em;
+        display: flex;
+        justify-content: space-between;
+      }
+      main {
+        background: turquoise;
+        padding: 1em;
+        display: flex;
+        min-height: 60vh;
+        color: #000000;
+      }
+      main section {
+        flex-basis: 70%;
+        padding-right: 0.8em;
+      }
+      aside {
+        background-color: #6495ed;
+        padding: 10px;
+        flex-basis: 50%;
+        color: #091834;
+      }
+      ul {
+        margin: 0;
+        padding: 0;
+      }
+      nav ul li {
+        display: inline-block;
+        text-align: center;
+      }
+      nav ul li a {
+        display: block;
+        background-color: pink;
+      }
+      h1 {
+        font-size: 1.5em;
+        font-weight: 900;
+      }
+      h2 {
+        font-size: 1.1em;
+        font-weight: 900;
+      }
+
+      img {
+        width: 100%;
+      }
+
+      @media (max-width: 899px) {
+        .wrapper {
+          width: 100%;
+        }
+        nav ul {
+          flex-direction: column;
+        }
+        nav li a {
+          padding: 0.8em;
+          margin-bottom: 0.8em;
+        }
+        main {
+          flex-direction: column;
+        }
+        main section {
+          flex-basis: 100%;
+        }
+        aside {
+          flex-basis: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body translate="no">
+    <header>
+      <h1>Activity 2 - Styling</h1>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="/" title="Homepage Link">Home</a></li>
+          <li><a href="/about-us" title="Know About Us">About Us</a></li>
+          <li><a href="/history" title="Know About Our History">History</a></li>
+          <li>
+            <a href="/contact-us" title="Have query? Contact Us">Contact Us</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section title="Introduction">
+        <article>
+          <h1>Intro to Web Accessibility</h1>
+          <p>
+            "Accessibility" can be difficult to spell, but it doesn't have to be
+            difficult to accomplish. In this guide, you will see how to get some
+            easy wins to help improve accessibility with minimal effort, how you
+            can use what's built in to HTML to create more accessible and robust
+            interfaces, and how to leverage some advanced techniques for
+            creating polished accessible experiences.
+          </p>
+        </article>
+        <article>
+          <h2>Basic Steps</h2>
+          <p>
+            For the rest of the guide, we'll dive into the practical aspects of
+            creating accessible web sites. We'll organize this effort around
+            three main subject areas:
+          </p>
+          <ul>
+            <li>
+              <strong>Focus:</strong> We'll look at how to build things that can
+              be operated with a keyboard instead of a mouse. This is important
+              for users with motor impairments, of course, but it also ensures
+              that your UI is in good shape for all users.
+            </li>
+            <li>
+              <strong>Semantics:</strong> We'll make sure that we express our
+              user interface in a robust way that works with a variety of
+              assistive technologies.
+            </li>
+            <li>
+              <strong>Styling:</strong> We'll consider visual design and look at
+              some techniques for making the visual elements of the interface as
+              flexible and usable as possible.
+            </li>
+          </ul>
+        </article>
+        <article class="lang">
+          <h2>Language Importance</h2>
+          <p>
+            English: Hello! My name is Navdeep Singh. I am 34 years old. I am
+            from India.
+          </p>
+          <p lang="de">
+            German: Hallo! Ich heise Navdeep Singh. Ich bin Vierunddreizig jahre
+            alt. Ich komme aus Indien.
+          </p>
+        </article>
+      </section>
+      <aside>
+        <h1>Workshop</h1>
+        <h2>Speaker: Navdeep Singh</h2>
+        <p>Date: 24th July 2020</p>
+        <img
+          src="https://assets.codepen.io/220615/Navdeep+Singh-CodeLandSpeaker.png"
+          alt="Codeland Distributed: Navdeep Singh - Intro to Web Accessibility on July 24, 2020"
+        />
+      </aside>
+    </main>
+    <div>
+      <footer>
+        <div>&copy; Copyright 2020</div>
+        <div>
+          <nav aria-label="Secondary">
+            <ul>
+              <li>
+                <a href="/guidelines" title="Our Guidelines">Guidelines</a>
+              </li>
+              <li>
+                <a href="/privacy-policy" title="Our Privacy Policy Document"
+                  >Privacy Policy</a
+                >
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
